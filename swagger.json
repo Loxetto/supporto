@@ -1,0 +1,1869 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Finbox FFR RX",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/v1/finbox/secured/ffr/session/restart/{sessionId}": {
+      "post": {
+        "tags": [
+          "session-controller"
+        ],
+        "description": "API di Session Restart: Questa funzione permette al chiamante di ristartare una sessione terminata, creando un nuovo dossier. API GET che richiede in input l'ID Cerved della Sessione ed il timeout. L'API restituirà in output l'ID della Sessione riaperta e l'End user token di autenticazione da utilizzare per le future chiamate.",
+        "operationId": "restart",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Parametro richiesto in input di quasi tutte le API messe a disposizione dal sistema che identifica la Sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Formato Stringa.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FFRRefreshSessionCallbacksDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRDossierSessionReferenceResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/finbox/secured/ffr/session/refresh/{sessionId}": {
+      "post": {
+        "tags": [
+          "session-controller"
+        ],
+        "description": "API di Session Refresh: Questa funzione permette al chiamante di ottenere un nuovo End user token valido. API GET che fornito in input l'ID Cerved della Sessione ed il tempo di validità del End user token in secondi restituisce un nuovo End user token. NOTA BENE: Durante l'uso dell'applicativo da parte dell'utente l'End user token viene sistematicamente rinnovato, quindi la sua durata è determinata dal valore in secondi forniti durante l'invocazione di creazione (Session Creation) che viene ricaricato durante l'utilizzo.",
+        "operationId": "refreshSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Parametro richiesto in input di quasi tutte le API messe a disposizione dal sistema che identifica la Sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Formato Stringa.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FFRRefreshSessionCallbacksDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRDossierSessionReferenceResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/finbox/secured/ffr/session/create": {
+      "post": {
+        "tags": [
+          "session-controller"
+        ],
+        "description": "API di Session Creation: Questa funzione è la prima invocazione che la banca deve effettuare per creare Sessione di richiesta di agevolazione nei sistemi Cerved. API POST alla quale devono essere passate tutte le informazioni obbligatorie definite dal Payload di invocazione del servizio. L'API restituirà in output l'ID della Sessione creata e l'End user token di autenticazione da utilizzare per le future chiamate.",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FFRCreationRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRDossierSessionReferenceResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/finbox/secured/ffr/download/{sessionId}/last-document": {
+      "post": {
+        "tags": [
+          "document-cas-authenticated-controller"
+        ],
+        "operationId": "downloadLastDossierDocument",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Parametro richiesto in input di quasi tutte le API messe a disposizione dal sistema che identifica la Sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Formato Stringa.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FFRDownloadDocumentRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRDocumentDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/finbox/secured/ffr/session/status/{sessionId}": {
+      "get": {
+        "tags": [
+          "session-controller"
+        ],
+        "description": "API di Session Status: Questa funzione permette al chiamante di conoscere lo stato della sessione Cerved e, se esiste, lo stato del dossier corrente. API GET che richiede in input l'ID Cerved della Sessione e restituisce in output il \"session_status\" ed il \"dossier_status\".",
+        "operationId": "status",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Parametro richiesto in input di quasi tutte le API messe a disposizione dal sistema che identifica la Sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Formato Stringa.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRDossierSessionStatusResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/finbox/secured/ffr/session/retrieve-data/{sessionId}": {
+      "get": {
+        "tags": [
+          "session-controller"
+        ],
+        "description": "API di recupero dei dati della sessione: Questa funzione permette al chiamante di recuperare un set di informazioni salienti riguardo il flusso di compilazione del documento legato al session id in input",
+        "operationId": "retrieveData",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Parametro richiesto in input di quasi tutte le API messe a disposizione dal sistema che identifica la Sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Formato Stringa.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRSessionDataDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/finbox/secured/ffr/session/resolve/{reference}": {
+      "get": {
+        "tags": [
+          "session-controller"
+        ],
+        "description": "API di Session Resolve: Questa funzione è messa a disposizione del chiamante per avere la chiave identificativa Cerved - indispensabile per invocare i servizi messi a disposizione - dato in input la chiave identificativa della banca passata all'atto della creazione (Session Creation) nel campo \"reference\". API GET che fornito in input il Reference Banca restituisce il payload di invocazione e l'ID Cerved della Sessione.",
+        "operationId": "resolve",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "path",
+            "description": "Parametro richiesto in input dalla Session Resolve che identifica pratica o la Richiesta di Agevolazione nei sistemi banca. Formato Stinga.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRSessionDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/finbox/secured/ffr/session/load/{sessionId}": {
+      "get": {
+        "tags": [
+          "session-controller"
+        ],
+        "description": "API di Session Load: Questa funzione permette al chiamante di ri-ottenere i dati dell'invocazione iniziale e lo stato della sessione. API GET che richiede in input l'ID Cerved della Sessione e restituisce in output il payload ricevuto all'atto della creazione e lo stato della sessione.",
+        "operationId": "load",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Parametro richiesto in input di quasi tutte le API messe a disposizione dal sistema che identifica la Sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Formato Stringa.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRSessionDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/finbox/secured/ffr/session/abort/{sessionId}": {
+      "delete": {
+        "tags": [
+          "session-controller"
+        ],
+        "description": "API di Session Abort: Questa funzione permette al chiamante di chiudere forzatamente la sessione nei sistemi Cerved. L'utente non avrà la possibilità di accedere o proseguire nel wizard di Richiesta di Agevolazione. API GET che richiede in input l'ID Cerved della Sessione",
+        "operationId": "abortSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "description": "Parametro richiesto in input di quasi tutte le API messe a disposizione dal sistema che identifica la Sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Formato Stringa.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FFRSessionDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CASAuthException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardException"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FFRRefreshSessionCallbacksDTO": {
+        "required": [
+          "session_timeout"
+        ],
+        "type": "object",
+        "properties": {
+          "callback_url_success": {
+            "type": "string",
+            "description": "Indirizzo web richiesto in input al chiamante che indica l'URL alla quale il sistema andrà a fare la redirect dell'end user (utente) alla conclusione positiva del wizard di Richiesta di Agevolazione (Documento prodotto). Formato Stringa."
+          },
+          "callback_url_failure": {
+            "type": "string",
+            "description": "Indirizzo web richiesto in input al chiamante che indica l'URL alla quale il sistema andrà a fare la redirect dell'end user (utente) alla conclusione anomala del wizard di Richiesta di Agevolazione. Formato Stringa."
+          },
+          "callback_label": {
+            "type": "string",
+            "description": "Etichetta che verrà mostrata sui bottoni tramite i quali l'utente finale potrà essere reindirizzato alle URL di callback"
+          },
+          "session_timeout": {
+            "type": "integer",
+            "description": "Valore richiesto in input al chiamante che indica la durata della validità del End user token. Formato Numerico che rappresenta una unità di tempo in secondi.",
+            "format": "int64"
+          }
+        }
+      },
+      "FFRDossierSessionReferenceResponseDTO": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "description": "Valore che identifica la sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Ad ogni richiesta di \"Session Creation\" che va a buon fine viene creata una nuova sessione alla quale sarà associato questo identificativo. Formato Stringa."
+          },
+          "reference": {
+            "type": "string",
+            "description": "Valore che identifica la sessione di la Richiesta di Agevolazione nei sistemi banca. Può essere fornito in input nella Session Creation ed utilizzato per recuperare la chiave Cerved per invocare i servizi. Formato Stinga."
+          },
+          "end_user_token": {
+            "type": "string",
+            "description": "Rappresenta il Token di autenticazione dell'utente al sistema Cerved di Richiesta di Agevolazione. La validità del Token è definita dall'attributo Session Timeout. Formato Stinga."
+          }
+        }
+      },
+      "FFRAddressDTO": {
+        "required": [
+          "city",
+          "province"
+        ],
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "description": "Valore che rappresenta l'indirizzo della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "city": {
+            "type": "string",
+            "description": "Valore che rappresenta la città/comune della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "province": {
+            "type": "string",
+            "description": "Valore che rappresenta la provincia della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "region": {
+            "type": "string",
+            "description": "Valore che rappresenta la regione della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "postal_code": {
+            "type": "string",
+            "description": "Valore che rappresenta il codice postale della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "country": {
+            "type": "string",
+            "description": "Valore che rappresenta il paese della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "toponym": {
+            "type": "string",
+            "description": "Valore che rappresenta il toponimo della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "street_type": {
+            "type": "string",
+            "description": "Valore che rappresenta tipo indirizzo della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "street_name": {
+            "type": "string",
+            "description": "Valore che rappresenta il nome via della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          },
+          "civic_number": {
+            "type": "string",
+            "description": "Valore che rappresenta il numero civico della sede legale dell'impresa (in un'unica stringa). Formato Stringa."
+          }
+        },
+        "description": "Informazioni riguardanti l'Indirizzo della sede legale dell'impresa richiedente"
+      },
+      "FFRApplicantDTO": {
+        "required": [
+          "birth_info",
+          "fiscal_code",
+          "name",
+          "surname"
+        ],
+        "type": "object",
+        "properties": {
+          "ndg": {
+            "type": "string",
+            "description": "Valore che la banca può fornire in fase di invocazione del servizio e che identifica il richiedente nei sistemi Banca. Formato Stringa."
+          },
+          "name": {
+            "type": "string",
+            "description": "Valore che la banca deve fornire in fase di invocazione del servizio e che identifica il nome del richiedente. Formato Stringa."
+          },
+          "surname": {
+            "type": "string",
+            "description": "Valore che la banca deve fornire in fase di invocazione del servizio e che identifica il cognome del richiedente. Formato Stringa."
+          },
+          "fiscal_code": {
+            "type": "string",
+            "description": "Valore che la banca deve fornire in fase di invocazione del servizio e che identifica il codice fiscale del richiedente. Formato Stringa."
+          },
+          "birth_info": {
+            "$ref": "#/components/schemas/FFRMemberOfCompanyBirthInfoDTO"
+          },
+          "document": {
+            "$ref": "#/components/schemas/FFRIdentityDocumentDTO"
+          }
+        },
+        "description": "Informazioni riguardanti il richiedente firmatario della richiesta di agevolazione al Fondo di garanzia."
+      },
+      "FFRBranchDTO": {
+        "type": "object",
+        "properties": {
+          "branch_id": {
+            "type": "string",
+            "description": "Valore che rappresenta l'identificativo della filiale che la Banca può fornire nel payload di invocazione. Formato Stringa."
+          },
+          "branch_province": {
+            "type": "string",
+            "description": "Valore che rappresenta la provincia della filiale che la Banca può fornire nel payload di invocazione. Formato Stringa."
+          },
+          "branch_region": {
+            "type": "string",
+            "description": "Valore che rappresenta la regione della filiale che la Banca può fornire nel payload di invocazione. Formato Stringa."
+          },
+          "branch_address": {
+            "type": "string",
+            "description": "Valore che rappresenta l'indirizzo della filiale che la Banca può fornire nel payload di invocazione. Formato Stringa."
+          },
+          "branch_cab": {
+            "type": "string",
+            "description": "Valore che rappresenta il CAB della filiale che la Banca può fornire nel payload di invocazione. Formato Stringa."
+          },
+          "branch_title": {
+            "type": "string",
+            "description": "Valore che rappresenta il nome della filiale che la Banca può fornire nel payload di invocazione. Formato Stringa."
+          },
+          "branch_area_id": {
+            "type": "string",
+            "description": "Valore che rappresenta l'area della filiale che la Banca può fornire nel payload di invocazione. Formato Stringa."
+          },
+          "branch_area_title": {
+            "type": "string",
+            "description": "Valore che rappresenta il nome dell'area della filiale che la Banca può fornire nel payload di invocazione. Formato Stringa."
+          },
+          "branch_email": {
+            "type": "string",
+            "description": "${swagger.attribute.branch.branchEmail}"
+          },
+          "branch_phone": {
+            "type": "string",
+            "description": "${swagger.attribute.branch.branchPhone}"
+          },
+          "branch_toll_free_number": {
+            "type": "string",
+            "description": "${swagger.attribute.branch.branchTollFreeNumber}"
+          }
+        },
+        "description": "Filiale bancaria a cui l'impresa richiedente fa riferimento. Dati non obbligatori fatta eccezione dei campi Branch Phone e Branch Email in caso di Handle Contact=true"
+      },
+      "FFRCompanyDTO": {
+        "required": [
+          "address",
+          "ateco",
+          "business_name",
+          "company_type",
+          "constitution_date",
+          "tax_code",
+          "vat_number"
+        ],
+        "type": "object",
+        "properties": {
+          "ndg": {
+            "type": "string",
+            "description": "Valore che la banca può fornire in fase di invocazione del servizio e che identifica l'impresa richiedente nei sistemi Banca. Formato Stringa."
+          },
+          "business_name": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la ragione sociale dell'impresa richiedente. Formato Stringa."
+          },
+          "tax_code": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta il codice fiscale dell'impresa richiedente. Formato Stringa."
+          },
+          "vat_number": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la partita IVA dell'impresa richiedente. Formato Stringa."
+          },
+          "address": {
+            "$ref": "#/components/schemas/FFRAddressDTO"
+          },
+          "pec": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta l'indirizzo email PEC dell'impresa richiedente. Formato Stringa."
+          },
+          "company_type": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la tipologia d'impresa (Valori possibili: COMPANY, INDIVIDUAL_COMPANY. ASSOCIATED_STUDY, NO_PROFIT)",
+            "enum": [
+              "COMPANY",
+              "INDIVIDUAL_COMPANY",
+              "ASSOCIATED_STUDY",
+              "NO_PROFIT"
+            ]
+          },
+          "ateco": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta l'Ateco di classificazione dell'impresa richiedente"
+          },
+          "constitution_date": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la data di costituzione dell'impresa richiedente",
+            "format": "date-time"
+          },
+          "customer_type": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la tipologia di cliente (Valori possibili: ACTUAL, PROSPECT)",
+            "enum": [
+              "ACTUAL",
+              "PROSPECT"
+            ]
+          }
+        },
+        "description": "Informazioni riguardanti l'impresa che richiede l'agevolazione al Fondo di garanzia."
+      },
+      "FFRCreationRequestDTO": {
+        "required": [
+          "callback_url_failure",
+          "callback_url_success",
+          "contact_email",
+          "payload",
+          "session_timeout"
+        ],
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string",
+            "description": "Valore che identifica la sessione di la Richiesta di Agevolazione nei sistemi banca. Può essere fornito in input nella Session Creation ed utilizzato per recuperare la chiave Cerved per invocare i servizi. Formato Stinga."
+          },
+          "payload": {
+            "$ref": "#/components/schemas/FFRPayloadDTO"
+          },
+          "callback_url_success": {
+            "type": "string",
+            "description": "Indirizzo web richiesto in input al chiamante che indica l'URL alla quale il sistema andrà a fare la redirect dell'end user (utente) alla conclusione positiva del wizard di Richiesta di Agevolazione (Documento prodotto). Formato Stringa."
+          },
+          "callback_url_failure": {
+            "type": "string",
+            "description": "Indirizzo web richiesto in input al chiamante che indica l'URL alla quale il sistema andrà a fare la redirect dell'end user (utente) alla conclusione anomala del wizard di Richiesta di Agevolazione. Formato Stringa."
+          },
+          "callback_label": {
+            "type": "string",
+            "description": "Etichetta che verrà mostrata sui bottoni tramite i quali l'utente finale potrà essere reindirizzato alle URL di callback"
+          },
+          "contact_email": {
+            "type": "string",
+            "description": "Indirizzo email richiesto in input al chiamante nel caso in cui le comunicazioni utente siano demandate a Cerved (Handle Contact=true). Formato Stringa."
+          },
+          "handle_contact": {
+            "type": "boolean",
+            "description": "Valore richiesto in input al chiamante che indica se le comunicazioni utente siano demandate a Cerved (true) oppure no (false). Formato Boolean."
+          },
+          "session_timeout": {
+            "type": "integer",
+            "description": "Valore richiesto in input al chiamante che indica la durata della validità del End user token. Formato Numerico che rappresenta una unità di tempo in secondi.",
+            "format": "int64"
+          }
+        }
+      },
+      "FFRFinancingOptionDTO": {
+        "required": [
+          "amount",
+          "duration",
+          "product"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Valore fornito al servizio di invocazione che rappresenta l'importo del finanziamento richiesto da garantire",
+            "format": "double"
+          },
+          "duration": {
+            "type": "integer",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la durata del finanziamento richiesto da garantire",
+            "format": "int32"
+          },
+          "rate_amount": {
+            "type": "number",
+            "description": "Valore che può essere fornito al servizio di invocazione che rappresenta l'importo della rata del finanziamento richiesto da garantire",
+            "format": "double"
+          },
+          "taeg": {
+            "type": "number",
+            "description": "Valore che può essere fornito al servizio di invocazione che rappresenta il TAEG del finanziamento richiesto da garantire",
+            "format": "double"
+          },
+          "tan": {
+            "type": "number",
+            "description": "Valore che può essere fornito al servizio di invocazione che rappresenta il TAN del finanziamento richiesto da garantire",
+            "format": "double"
+          },
+          "product": {
+            "$ref": "#/components/schemas/FFRFinancingProductDTO"
+          }
+        },
+        "description": "Informazioni riguardanti la richiesta di finanziamento per cui si richiede l'agevolazione al Fondo di garanzia."
+      },
+      "FFRFinancingProductDTO": {
+        "required": [
+          "description",
+          "financial_purpose",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la tipologia di finanziamento richiesto da garantire (Valori possibili: LIQUIDITY, INVESTMENT, CONSOLIDATION_RENEGOTIATION)",
+            "enum": [
+              "INVESTMENT",
+              "LIQUIDITY",
+              "CONSOLIDATION_RENEGOTIATION"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la finalità del finanziamento"
+          },
+          "financial_purpose": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la descrizione o nome del prodotto finanziamento richiesto con la nomenclatura banca"
+          }
+        },
+        "description": "Informazioni riguardanti la tipologia di finanziamento richiesto da garantire"
+      },
+      "FFRIdentityDocumentDTO": {
+        "required": [
+          "birth_date",
+          "expiration_date",
+          "issuing_date",
+          "number",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la tipologia del documento identificativo del richiedente",
+            "enum": [
+              "ITALIAN_DIGITAL_ID_CARD",
+              "ITALIAN_ID_CARD",
+              "ITALIAN_PASSPORT",
+              "ITALIAN_DRIVING_LICENSE",
+              "ITALIAN_GENERIC_ID_CARD",
+              "ITALIAN_MINOR_ID_CARD"
+            ]
+          },
+          "number": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta il numero del documento identificativo del richiedente"
+          },
+          "issuing_date": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la data emissione del documento identificativo del richiedente",
+            "format": "date-time"
+          },
+          "expiration_date": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la data di scadenza del documento identificativo del richiedente",
+            "format": "date-time"
+          },
+          "birth_date": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la data di nascita del richiedente",
+            "format": "date-time"
+          }
+        },
+        "description": "Informazioni riguardanti il documento identificativo del richiedente"
+      },
+      "FFRMemberOfCompanyBirthInfoDTO": {
+        "required": [
+          "date",
+          "nation_iso_code",
+          "town_description"
+        ],
+        "type": "object",
+        "properties": {
+          "nation_iso_code": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la nazione di nascita del richiedente"
+          },
+          "date": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la data di nascita del richiedente",
+            "format": "date-time"
+          },
+          "province_code": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la provincia di nascita del richiedente"
+          },
+          "town_description": {
+            "type": "string",
+            "description": "Valore fornito al servizio di invocazione che rappresenta la città/comune di nascita del richiedente"
+          }
+        },
+        "description": "Informazioni riguardanti la nascita del richiedente"
+      },
+      "FFRPayloadDTO": {
+        "required": [
+          "applicant",
+          "branch",
+          "company",
+          "financing_option"
+        ],
+        "type": "object",
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/FFRCompanyDTO"
+          },
+          "financing_option": {
+            "$ref": "#/components/schemas/FFRFinancingOptionDTO"
+          },
+          "applicant": {
+            "$ref": "#/components/schemas/FFRApplicantDTO"
+          },
+          "branch": {
+            "$ref": "#/components/schemas/FFRBranchDTO"
+          }
+        },
+        "description": "Informazioni richieste in input al chiamante per creare una nuova sessione Richiesta di Agevolazione nei sistemi Cerved"
+      },
+      "FFRDownloadDocumentRequestDTO": {
+        "required": [
+          "prefix"
+        ],
+        "type": "object",
+        "properties": {
+          "prefix": {
+            "type": "string",
+            "description": "Prefisso del bookmark da applicare ad ogni punto firma sul documento pdf"
+          },
+          "applicant": {
+            "$ref": "#/components/schemas/FFRApplicantDTO"
+          }
+        }
+      },
+      "FFRDocumentDTO": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer",
+            "description": "Numero che indica quanti documenti PDF di Richiesta di Agevolazione sono stati generati nel Dossier corrente",
+            "format": "int32"
+          },
+          "filename": {
+            "type": "string",
+            "description": "Nome del file del documento PDF di Richiesta di Agevolazione"
+          },
+          "template_version": {
+            "type": "string",
+            "description": "Versione del template PDF di Richiesta di Agevolazione ultilizzato per realizzare il documento"
+          },
+          "file": {
+            "type": "string",
+            "description": "File PDF del documento di Richiesta di Agevolazione in formato base 64 con punti firma"
+          }
+        }
+      },
+      "FFRDossierSessionStatusResponseDTO": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "description": "Valore che identifica la sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Ad ogni richiesta di \"Session Creation\" che va a buon fine viene creata una nuova sessione alla quale sarà associato questo identificativo. Formato Stringa."
+          },
+          "session_status": {
+            "type": "string",
+            "description": "Valore che rappresenta lo stato della sessione di Richiesta di Agevolazione nei sistemi Cerved. Formato Stringa.",
+            "enum": [
+              "CREATED",
+              "STARTED",
+              "ENDED",
+              "ABORTED",
+              "CANCELLED"
+            ]
+          },
+          "dossier_status": {
+            "type": "string",
+            "description": "Valore che rappresenta lo stato dell'ultimo documento in lavorazione o lavaorato - wizard utente.  Formato Stringa.",
+            "enum": [
+              "RUNNING",
+              "SUSPENDED",
+              "SUCCESS",
+              "FAILURE",
+              "ABORTED",
+              "EXPIRED",
+              "TECHNICAL_ABORTED"
+            ]
+          }
+        }
+      },
+      "FFRCompanyDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "business_name": {
+            "type": "string",
+            "description": "Ragione sociale dell'impresa presente nei sistemi Cerved"
+          },
+          "tax_code": {
+            "type": "string",
+            "description": "Codice fiscale dell'impresa presente nei sistemi Cerved"
+          },
+          "vat_number": {
+            "type": "string",
+            "description": "Partita IVA dell'impresa presente nei sistemi Cerved"
+          },
+          "activity_status": {
+            "type": "string",
+            "description": "Stato dell'impresa presente nei sistemi Cerved"
+          },
+          "ateco_code": {
+            "type": "string",
+            "description": "Ateco dell'impresa presente nei sistemi Cerved"
+          },
+          "ateco_description": {
+            "type": "string",
+            "description": "Descrizione ateco dell'impresa presente nei sistemi Cerved"
+          },
+          "ateco_matched": {
+            "type": "boolean",
+            "description": "Match tra l'ateco fornito in input nel payload di invocazione dell'API Create e l'ateco nei sistemi Cerved"
+          },
+          "innovative_startup": {
+            "type": "boolean",
+            "description": "Flag che indica se l'impresa è \"innovativa\" - dato che viene precompilato con dato Cerved, ma modificabile dall'utente"
+          },
+          "certified_incubator": {
+            "type": "boolean",
+            "description": "Flag che indica se l'impresa è \"incubatore certificato\" - dato che viene precompilato con dato Cerved, ma modificabile dall'utente"
+          },
+          "registered_pec": {
+            "type": "string",
+            "description": "Pec dell'impresa registrata presso il Fondo di Garanzia"
+          }
+        },
+        "description": "Informazioni riguardanti l'impresa che richiede il finanziamento con agevolazione del Fondo di garanzia."
+      },
+      "FFRCompanySizeCompanyDTO": {
+        "type": "object",
+        "properties": {
+          "vat_number": {
+            "type": "string",
+            "description": "Partita IVA o Var Number per impresa estera dell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente"
+          },
+          "tax_code": {
+            "type": "string",
+            "description": "Codice Fiscaledell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente"
+          },
+          "denomination": {
+            "type": "string",
+            "description": "Denominazione dell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente"
+          },
+          "employees": {
+            "type": "integer",
+            "description": "Occupati (ULA) dell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente",
+            "format": "int64"
+          },
+          "group_br_ownership_percentage": {
+            "type": "number",
+            "description": "${swagger.attribute.companySize.companies.groupBrOwnershipPercentage}",
+            "format": "double"
+          },
+          "relation_type": {
+            "type": "string",
+            "description": "Relazione di associazione/collegamento dell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente"
+          },
+          "is_group_leader": {
+            "type": "boolean",
+            "description": "Flag che indica se l'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione d'impresa è o meno la richiedente"
+          },
+          "last_balance_sheet_date": {
+            "type": "string",
+            "description": "Data della presentazione del bilancio dell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente",
+            "format": "date-time"
+          },
+          "revenues": {
+            "type": "number",
+            "description": "Fatturato dell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente",
+            "format": "double"
+          },
+          "active": {
+            "type": "number",
+            "description": "Attivo dell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente",
+            "format": "double"
+          },
+          "ownership_percentage": {
+            "type": "number",
+            "description": "% di associazione/collegamento dell'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente",
+            "format": "double"
+          }
+        },
+        "description": "Informazioni riguardanti l'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente"
+      },
+      "FFRCompanySizeDTO": {
+        "type": "object",
+        "properties": {
+          "companies": {
+            "type": "array",
+            "description": "Informazioni riguardanti l'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente",
+            "items": {
+              "$ref": "#/components/schemas/FFRCompanySizeCompanyDTO"
+            }
+          },
+          "recent_year_result": {
+            "$ref": "#/components/schemas/FFRCompanySizeResultDTO"
+          },
+          "previous_year_companies": {
+            "type": "array",
+            "description": "Informazioni riguardanti l'impresa che partecipa, in quanto collegata o associata, alla definizione della dimensione dell'impresa richiedente",
+            "items": {
+              "$ref": "#/components/schemas/FFRCompanySizeCompanyDTO"
+            }
+          },
+          "previous_year_result": {
+            "$ref": "#/components/schemas/FFRCompanySizeResultDTO"
+          }
+        },
+        "description": "${swagger.attribute.companySize}"
+      },
+      "FFRCompanySizeResultDTO": {
+        "type": "object",
+        "properties": {
+          "total_revenue": {
+            "type": "integer",
+            "description": "Fatturato totale relativo all'impresa richiedente calcolato",
+            "format": "int64"
+          },
+          "total_active": {
+            "type": "integer",
+            "description": "Totale di bilancio relativo all'impresa richiedente calcolato",
+            "format": "int64"
+          },
+          "total_employees": {
+            "type": "integer",
+            "description": "Occupati (ULA) totali relativi all'impresa richiedente calcolati",
+            "format": "int64"
+          },
+          "size": {
+            "type": "string",
+            "description": "Dimensione relativa all'impresa richiedente calcolata"
+          },
+          "relation_type": {
+            "type": "string",
+            "description": "Tipologia dell'impresa richiedente calcolata"
+          }
+        },
+        "description": "Informazioni riguardanti la dimensione d'impresa calcolata dai dati precompilati dal sistema ed eventualmente modificati dall'utente"
+      },
+      "FFRFinancialCoveragePlanDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "own_resources": {
+            "type": "number",
+            "description": "Importo della copertura tramite risorse proprie inserito dall'utente",
+            "format": "double"
+          },
+          "other": {
+            "type": "number",
+            "description": "Importo della copertura tramite \"altre\" risorse inserito dall'utente",
+            "format": "double"
+          },
+          "other_description": {
+            "type": "string",
+            "description": "Descrizione della copertura dell'investimento legata all'importo \"altro\" inserito dall'utente"
+          }
+        },
+        "description": "Informazioni riguardanti il piano di copertura dell'investimento per cui si richiede il finanziamento con agevolazione del Fondo di garanzia"
+      },
+      "FFRInvestmentBranchDTO": {
+        "type": "object",
+        "properties": {
+          "toponym": {
+            "type": "string",
+            "description": "Toponimo della sede oggetto dell'investimento selezionata dall'utente"
+          },
+          "street": {
+            "type": "string",
+            "description": "Via della sede oggetto dell'investimento selezionata dall'utente"
+          },
+          "city": {
+            "type": "string",
+            "description": "Città della sede oggetto dell'investimento selezionata dall'utente"
+          },
+          "province": {
+            "type": "string",
+            "description": "Provincia della sede oggetto dell'investimento selezionata dall'utente"
+          },
+          "zip_code": {
+            "type": "string",
+            "description": "Codice di avviamento postale della sede oggetto dell'investimento selezionata dall'utente"
+          }
+        },
+        "description": "Informazioni riguardanti la sede oggetto dell'investimento selezionata dall'utente per cui si richiede il finanziamento con agevolazione del Fondo di garanzia"
+      },
+      "FFRInvestmentDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "branch": {
+            "$ref": "#/components/schemas/FFRInvestmentBranchDTO"
+          },
+          "investment_description": {
+            "type": "string",
+            "description": "Breve descrizione fornita dall'utente riguardo l'investimento per cui si richiede il finanziamento"
+          },
+          "investment_amount": {
+            "type": "number",
+            "description": "Importo dell'investimento inserito dall'utente",
+            "format": "double"
+          },
+          "legal_branch": {
+            "type": "boolean",
+            "description": "Flag che indica se la sede oggetto dell'investimento selezionata dall'utente è la sede legale dell'impresa"
+          },
+          "liquidity_connected_to_investment": {
+            "type": "boolean",
+            "description": "Flag che indica se la parte di liquidità del finanziamento richiesto sarà comunque utilizzata per l'attività legata all'investimento"
+          },
+          "investment_already_started": {
+            "type": "boolean",
+            "description": "Flag che indica se l'attività legata all'investimento è già iniziata"
+          },
+          "investment_completed": {
+            "type": "boolean",
+            "description": "Flag che indica se l'attività legata all'investimento è già conclusa"
+          },
+          "already_facilitated_plan": {
+            "type": "boolean",
+            "description": "Flag che indica se il programma d'investimento è stato o meno agevolato da altre misure"
+          },
+          "liquidity_destination": {
+            "type": "string",
+            "description": "Breve descrizione della destinazione dell'importo con finalità liquidità"
+          },
+          "investment_plan_details": {
+            "$ref": "#/components/schemas/FFRInvestmentPlanDetailsDTO"
+          },
+          "financial_coverage_plan_details": {
+            "$ref": "#/components/schemas/FFRFinancialCoveragePlanDetailsDTO"
+          },
+          "facilitated_requests": {
+            "type": "array",
+            "description": "Informazioni riguardanti le eventuali altre agevolazioni ottenute per l'investimento per cui si richiede il finanziamento con agevolazione del Fondo di garanzia",
+            "items": {
+              "$ref": "#/components/schemas/FFRInvestmentFacilitatedRequestDTO"
+            }
+          },
+          "investment_start_date": {
+            "type": "string",
+            "description": "Data inizio attività legata all'investimento inserita dall'utente",
+            "format": "date-time"
+          },
+          "investment_end_date": {
+            "type": "string",
+            "description": "Data fine attività legata all'investimento inserita dall'utente",
+            "format": "date-time"
+          },
+          "ateco_code": {
+            "type": "string",
+            "description": "Ateco attività legata alla sede oggetto dell'investimento"
+          },
+          "ateco_description": {
+            "type": "string",
+            "description": "Descrizione ateco attività legata alla sede oggetto dell'investimento"
+          }
+        },
+        "description": "Informazioni riguardanti l'investimento per cui si richiede il finanziamento con agevolazione del Fondo di garanzia."
+      },
+      "FFRInvestmentFacilitatedRequestDTO": {
+        "type": "object",
+        "properties": {
+          "contact": {
+            "type": "string",
+            "description": "Riferimento normativo e amministrazione concedente dell'altra agevolazione ottenuta per l'investimento"
+          },
+          "contribution_type": {
+            "type": "string",
+            "description": "Tipologia di contributo dell'altra agevolazione ottenuta per l'investimento"
+          },
+          "concession_grant_date": {
+            "type": "string",
+            "description": "Data di concessione dell'altra agevolazione ottenuta per l'investimento",
+            "format": "date-time"
+          },
+          "esl": {
+            "type": "number",
+            "description": "ESL ottenuto dell'altra agevolazione ottenuta per l'investimento",
+            "format": "double"
+          }
+        },
+        "description": "Informazioni riguardanti le eventuali altre agevolazioni ottenute per l'investimento per cui si richiede il finanziamento con agevolazione del Fondo di garanzia"
+      },
+      "FFRInvestmentPlanDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "building_plots": {
+            "type": "number",
+            "description": "Importo dell'investimento dedicato a terreni inserito dall'utente",
+            "format": "double"
+          },
+          "machines": {
+            "type": "number",
+            "description": "Importo dell'investimento dedicato a macchinari, impianti ed attrezzature inserito dall'utente",
+            "format": "double"
+          },
+          "intangible_investments": {
+            "type": "number",
+            "description": "Importo dell'investimento dedicato a investimenti immateriali inserito dall'utente",
+            "format": "double"
+          },
+          "financial_assets": {
+            "type": "number",
+            "description": "Importo dell'investimento dedicato a attivi finanziari inserito dall'utente",
+            "format": "double"
+          },
+          "other": {
+            "type": "number",
+            "description": "Importo dell'investimento dedicato a \"altro\" inserito dall'utente",
+            "format": "double"
+          },
+          "other_description": {
+            "type": "string",
+            "description": "Descrizione della tipologia attività legata all'importo dell'investimento \"altro\" inserito dall'utente"
+          }
+        },
+        "description": "Informazioni riguardanti il piano di dettaglio dell'investimento per cui si richiede il finanziamento con agevolazione del Fondo di garanzia"
+      },
+      "FFRSessionDataDTO": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/FFRCompanyDTO"
+          },
+          "financing_option": {
+            "$ref": "#/components/schemas/FFRFinancingOptionDTO"
+          },
+          "applicant": {
+            "$ref": "#/components/schemas/FFRApplicantDTO"
+          },
+          "branch": {
+            "$ref": "#/components/schemas/FFRBranchDTO"
+          },
+          "company_details": {
+            "$ref": "#/components/schemas/FFRCompanyDetailsDTO"
+          },
+          "investment_details": {
+            "$ref": "#/components/schemas/FFRInvestmentDetailsDTO"
+          },
+          "company_size": {
+            "$ref": "#/components/schemas/FFRCompanySizeDTO"
+          },
+          "support_choice": {
+            "type": "string",
+            "description": "Tipologia di beneficio scelta dall'utente da richiedere al Fondo di Garanzia"
+          }
+        }
+      },
+      "FFRSessionDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Valore che identifica la sessione di Richiesta di Agevolazione presente nei sistemi Cerved. Formato Stringa."
+          },
+          "status": {
+            "type": "string",
+            "description": "Valore che rappresenta lo stato della sessione di Richiesta di Agevolazione nei sistemi Cerved. Formato Stringa.",
+            "enum": [
+              "CREATED",
+              "STARTED",
+              "ENDED",
+              "ABORTED",
+              "CANCELLED"
+            ]
+          },
+          "failure_description": {
+            "type": "string",
+            "description": "Descrizione del motivo per cui l'utente finale è andato in wayout. (Valori possibili: ERROR_WAYOUT, COMPANY_SIZE_ERROR_WAYOUT)"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Valore che identifica la sessione di la Richiesta di Agevolazione nei sistemi banca. Può essere fornito in input nella Session Creation ed utilizzato per recuperare la chiave Cerved per invocare i servizi. Formato Stinga."
+          },
+          "payload": {
+            "$ref": "#/components/schemas/FFRPayloadDTO"
+          },
+          "callback_url_success": {
+            "type": "string",
+            "description": "Indirizzo web richiesto in input al chiamante che indica l'URL alla quale il sistema andrà a fare la redirect dell'end user (utente) alla conclusione positiva del wizard di Richiesta di Agevolazione (Documento prodotto). Formato Stringa."
+          },
+          "callback_url_failure": {
+            "type": "string",
+            "description": "Indirizzo web richiesto in input al chiamante che indica l'URL alla quale il sistema andrà a fare la redirect dell'end user (utente) alla conclusione anomala del wizard di Richiesta di Agevolazione. Formato Stringa."
+          },
+          "contact_email": {
+            "type": "string",
+            "description": "Indirizzo email richiesto in input al chiamante nel caso in cui le comunicazioni utente siano demandate a Cerved (Handle Contact=true). Formato Stringa."
+          },
+          "handle_contact": {
+            "type": "boolean",
+            "description": "Valore richiesto in input al chiamante che indica se le comunicazioni utente siano demandate a Cerved (true) oppure no (false). Formato Boolean."
+          }
+        }
+      },
+      "CASAuthException": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "service_error": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status_description": {
+            "type": "string"
+          },
+          "service_error_description": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "login_url": {
+            "type": "string"
+          },
+          "logout_url": {
+            "type": "string"
+          }
+        }
+      },
+      "StandardException": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "service_error": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status_description": {
+            "type": "string"
+          },
+          "service_error_description": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
