@@ -1,0 +1,342 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Swagger for MDH web-service",
+    "version": "2.3.0",
+    "contact": {
+      "email": "support@exfidant.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://bancobpm.exfidant-cloud.com/evdmw/webservices/"
+    }
+  ],
+  "paths": {
+    "/mdhbbgws": {
+      "post": {
+        "summary": "bloomberg GETDATA",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestGetData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseGetData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Errore applicativo, ad esempio richiesta non valida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FATAL_ERROR"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Errore sistemistico e/o errore generico",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FATAL_ERROR"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FATAL_ERROR"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FATAL_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RequestGetData": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "username": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "example": [
+              "INDIA"
+            ]
+          },
+          "application": {
+            "type": "string",
+            "example": "INDIA_APP"
+          },
+          "headers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "PROGRAMFLAG=ADHOC"
+            ]
+          },
+          "cacheCascade": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          },
+          "evdmdp": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "MB IM Equity|TICKER;PX_LAST;",
+              "MB IM Equity|TICKER;PX_ASK;",
+              "MB IM Equity|TICKER;PX_BID;"
+            ]
+          },
+          "evdmdc": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          },
+          "evdmdco": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          },
+          "evdmdh": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          },
+          "evdmdhr": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          },
+          "evdmdbcompany": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": []
+          },
+          "version": {
+            "type": "string",
+            "example": "2.4.0"
+          }
+        },
+        "required": [
+          "username",
+          "application"
+        ]
+      },
+      "ResponseGetData": {
+        "type": "object",
+        "additionalProperties": true,
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/ResponseGetDataSuccessful"
+          },
+          {
+            "$ref": "#/components/schemas/Error"
+          }
+        ]
+      },
+      "ResponseGetDataSuccessful": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "username": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  "MARIO ROSSI"
+                ]
+              },
+              "application": {
+                "type": "string",
+                "example": "INDIA APP"
+              },
+              "headers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  "PROGRAMFLAG=ADHOC"
+                ]
+              },
+              "cacheCascade": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  ""
+                ]
+              },
+              "evdmdp": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  "MB IM Equity|TICKER;PX_LAST;11,890000",
+                  "MB IM Equity|TICKER;PX_ASK;11,885000",
+                  "MB IM Equity|TICKER;PX_BID;11,880000"
+                ]
+              },
+              "evdmdc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  ""
+                ]
+              },
+              "evdmdco": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  ""
+                ]
+              },
+              "evdmdh": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  ""
+                ]
+              },
+              "evdmdhr": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  ""
+                ]
+              },
+              "evdmdbcompany": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "example": [
+                  ""
+                ]
+              },
+              "version": {
+                "type": "string",
+                "example": "2.4.0"
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Tipologia di risposta",
+            "example": "error"
+          },
+          "error": {
+            "type": "string",
+            "description": "Tipo di Eccezione",
+            "example": "Exception"
+          },
+          "description": {
+            "type": "string",
+            "pattern": "^(?!\\s*$).+",
+            "description": "Descrizione estesa con motivazione dell'errore",
+            "example": "Empty EVDMDP, EVDMDC, EVDMCO, EVDMDH and EVDMDHR elements from the json request"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FATAL_ERROR": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "example": 500
+              },
+              "message": {
+                "type": "string",
+                "example": "Errore interno del server"
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
